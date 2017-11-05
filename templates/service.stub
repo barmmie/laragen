@@ -1,0 +1,32 @@
+<?php
+
+namespace $NAMESPACE_SERVICE$;
+
+use $NAMESPACE_MODEL$\$MODEL_NAME$;
+use InfyOm\Generator\Common\BaseService;
+
+$DOCS$
+class $MODEL_NAME$Service extends BaseService
+{
+
+    public function create(array $attributes)
+    {
+        $model = $MODEL_NAME$::create($attributes);
+
+        $model = $this->updateRelations($model, $attributes);
+        $model->save();
+
+        return $model;
+    }
+
+    public function update( $id, array $attributes)
+    {
+
+        $model = $MODEL_NAME$::findOrFail($id)
+        $model = $model->update($attributes, $id);
+
+        $model = $this->updateRelations($model, $attributes);
+
+        return $model;
+    }
+}
