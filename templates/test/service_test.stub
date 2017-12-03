@@ -1,0 +1,54 @@
+<?php
+
+namespace Test\Api\V1\Services;
+use Test\ApiTestTrait;
+use Test\TestCase;
+use $NAMESPACE_MODEL$\$MODEL_NAME$;
+use $NAMESPACE_SERVICE$\$MODEL_NAME$Service;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Test\Traits\Make$MODEL_NAME$Trait;
+use App;
+class $MODEL_NAME$ServiceTest extends TestCase
+{
+    use Make$MODEL_NAME$Trait, ApiTestTrait, DatabaseTransactions;
+
+    /**
+     * @var $MODEL_NAME$Service
+     */
+    protected $$MODEL_NAME_CAMEL$Service;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->$MODEL_NAME_CAMEL$Service = App::make($MODEL_NAME$Service::class);
+    }
+
+    /**
+     * @test create
+     */
+    public function testCreate$MODEL_NAME$()
+    {
+        $$MODEL_NAME_CAMEL$ = $this->fake$MODEL_NAME$Data();
+        $created$MODEL_NAME$ = $this->$MODEL_NAME_CAMEL$Service->create($$MODEL_NAME_CAMEL$);
+        $created$MODEL_NAME$ = $created$MODEL_NAME$->toArray();
+        $this->assertArrayHasKey('id', $created$MODEL_NAME$);
+        $this->assertNotNull($created$MODEL_NAME$['id'], 'Created $MODEL_NAME$ must have id specified');
+        $this->assertNotNull($MODEL_NAME$::find($created$MODEL_NAME$['id']), '$MODEL_NAME$ with given id must be in DB');
+        $this->assertModelData($$MODEL_NAME_CAMEL$, $created$MODEL_NAME$);
+    }
+
+    /**
+     * @test update
+     */
+    public function testUpdate$MODEL_NAME$()
+    {
+        $$MODEL_NAME_CAMEL$ = $this->make$MODEL_NAME$();
+        $fake$MODEL_NAME$ = $this->fake$MODEL_NAME$Data();
+        $updated$MODEL_NAME$ = $this->$MODEL_NAME_CAMEL$Service->update($$MODEL_NAME_CAMEL$->id, $fake$MODEL_NAME$);
+        $this->assertModelData($fake$MODEL_NAME$, $updated$MODEL_NAME$->toArray());
+        $db$MODEL_NAME$ = $MODEL_NAME$::find($$MODEL_NAME_CAMEL$->id);
+        $this->assertModelData($fake$MODEL_NAME$, $db$MODEL_NAME$->toArray());
+    }
+
+}
+

@@ -1,0 +1,27 @@
+<?php
+
+namespace $NAMESPACE_RESOURCE$;
+
+use $NAMESPACE_MODEL$\$MODEL_NAME$;
+use Illuminate\Http\Resources\Json\Resource as BaseResource;
+
+
+$DOCS$
+class $MODEL_NAME_PLURAL$Resource extends BaseResource
+{
+
+
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        return [
+            $FIELDS$
+        ];
+    }
+
+}

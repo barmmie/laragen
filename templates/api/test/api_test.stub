@@ -1,0 +1,140 @@
+<?php
+
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Test\ApiTestTrait;
+use Test\Traits\Make$MODEL_NAME$Trait;
+use Test\TestCase;
+use Test\Traits\MakeOrganizationTrait;
+
+class $MODEL_NAME$ApiTest extends TestCase
+{
+    use Make$MODEL_NAME$Trait, ApiTestTrait, MakeOrganizationTrait, DatabaseTransactions;
+
+    /**
+     * @test
+     */
+    public function testCreate$MODEL_NAME$()
+    {
+        list($organization, $user) = $this->makeOrganizationWithUser();
+
+        $$MODEL_NAME_CAMEL$ = $this->fake$MODEL_NAME$Data();
+        $response = $this->withHeaders([
+            'x-organization-id' => $organization->id
+        ])->json('POST', '/api/v1/$MODEL_NAME_PLURAL_CAMEL$', $$MODEL_NAME_CAMEL$);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('$MODEL_NAME_PLURAL_CAMEL$', [
+            'replace_property' => $$MODEL_NAME_CAMEL$['replace_property'],
+        ]);
+
+        $response->assertJsonFragment([
+            'replace_property' => $$MODEL_NAME_CAMEL$['replace_property'],
+        ]);
+
+    }
+
+    /**
+     * @test
+     */
+    public function testRead$MODEL_NAME$()
+    {
+
+        list($organization, $user) = $this->makeOrganizationWithUser();
+
+        $$MODEL_NAME_CAMEL$ = $this->make$MODEL_NAME$([
+            'organization_id' => $organization->id
+        ]);
+        $response = $this->withHeaders([
+            'x-organization-id' => $organization->id
+        ])->json('GET', '/api/v1/$MODEL_NAME_PLURAL_CAMEL$/'.$$MODEL_NAME_CAMEL$->id);
+
+        $response->assertJsonFragment([
+            'last_name' => $$MODEL_NAME_CAMEL$->last_name
+        ]);
+
+
+    }
+
+    /**
+     * @test
+     */
+    public function testSearch$MODEL_NAME$()
+    {
+        list($organization, $user) = $this->makeOrganizationWithUser();
+
+        $$MODEL_NAME_CAMEL$ = $this->make$MODEL_NAME$([
+            'organization_id' => $organization->id
+        ]);
+        $response = $this->withHeaders([
+            'x-organization-id' => $organization->id
+        ])->json('GET', '/api/v1/$MODEL_NAME_PLURAL_CAMEL$/');
+
+        $response->assertSuccessful();
+
+        $response->assertJsonFragment([
+            'replace_property' => $$MODEL_NAME_CAMEL$->replace_property,
+        ]);
+
+    }
+
+    /**
+     * @test
+     */
+    public function testUpdate$MODEL_NAME$()
+    {
+        list($organization, $user) = $this->makeOrganizationWithUser();
+
+        $$MODEL_NAME_CAMEL$ = $this->make$MODEL_NAME$([
+            'organization_id' => $organization->id
+        ]);
+
+        $edited$MODEL_NAME$ = $this->fake$MODEL_NAME$Data();
+
+        $response = $this->withHeaders([
+            'x-organization-id' => $organization->id
+        ])->json('PUT', '/api/v1/$MODEL_NAME_PLURAL_CAMEL$/'.$$MODEL_NAME_CAMEL$->id, $edited$MODEL_NAME$);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('$MODEL_NAME_PLURAL_CAMEL$', [
+            'replace_property' => $edited$MODEL_NAME$['replace_property'],
+        ]);
+
+        $this->assertDatabaseMissing('$MODEL_NAME_PLURAL_CAMEL$', [
+            'replace_property' => $$MODEL_NAME_CAMEL$->replace_property,
+        ]);
+
+        $response->assertJsonFragment([
+            'replace_property' => $edited$MODEL_NAME$['replace_property'],
+        ]);
+
+    }
+
+    /**
+     * @test
+     */
+    public function testDelete$MODEL_NAME$()
+    {
+        list($organization, $user) = $this->makeOrganizationWithUser();
+
+        $$MODEL_NAME_CAMEL$ = $this->make$MODEL_NAME$([
+            'organization_id' => $organization->id
+        ]);
+        $response = $this->withHeaders([
+            'x-organization-id' => $organization->id
+        ])->json('DELETE', '/api/v1/$MODEL_NAME_PLURAL_CAMEL$/'.$$MODEL_NAME_CAMEL$->id);
+        $response->assertSuccessful();
+
+        $this->assertDatabaseMissing('$MODEL_NAME_PLURAL_CAMEL$', [
+            'replace_property' => $$MODEL_NAME_CAMEL$->replace_property,
+            'deleted_at' => null
+        ]);
+
+        $response = $this->withHeaders([
+            'x-organization-id' => $organization->id
+        ])->json('GET', '/api/v1/$MODEL_NAME_PLURAL_CAMEL$/'.$$MODEL_NAME_CAMEL$->id);
+        $response->assertStatus(404);
+    }
+}

@@ -1,0 +1,42 @@
+<?php
+namespace Test\Traits;
+
+use $NAMESPACE_MODEL$\$MODEL_NAME$;
+
+trait Make$MODEL_NAME$Trait
+{
+    /**
+     * Create fake instance of $MODEL_NAME$ and save it in database
+     *
+     * @param array $$MODEL_NAME_CAMEL$Fields
+     * @return $MODEL_NAME$
+     */
+    public function make$MODEL_NAME$($$MODEL_NAME_CAMEL$Fields = [])
+    {
+
+        return factory($MODEL_NAME$::class)->create($$MODEL_NAME_CAMEL$Fields);
+    }
+
+    /**
+     * Get fake instance of $MODEL_NAME$
+     *
+     * @param array $$MODEL_NAME_CAMEL$Fields
+     * @return $MODEL_NAME$
+     */
+    public function fake$MODEL_NAME$($$MODEL_NAME_CAMEL$Fields = [])
+    {
+        return factory($MODEL_NAME$::class)->make($$MODEL_NAME_CAMEL$Fields);
+    }
+
+    /**
+     * Get fake data of $MODEL_NAME$
+     *
+     * @param array $postFields
+     * @return array
+     */
+    public function fake$MODEL_NAME$Data($$MODEL_NAME_CAMEL$Fields = [])
+    {
+        return $this->fake$MODEL_NAME$($$MODEL_NAME_CAMEL$Fields)->toArray();
+    }
+}
+

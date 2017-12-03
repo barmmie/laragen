@@ -1,0 +1,44 @@
+<?php
+
+namespace $NAMESPACE_SERVICE$;
+
+use $NAMESPACE_MODEL$\$MODEL_NAME$;
+use InfyOm\Generator\Common\BaseService;
+
+$DOCS$
+class $MODEL_NAME$Service extends BaseService
+{
+
+    public function create(array $attributes)
+    {
+        $model = $MODEL_NAME$::create($attributes);
+
+        $model->save();
+
+        return $model;
+    }
+
+    public function update( $id, array $attributes)
+    {
+
+        $model = $MODEL_NAME$::findOrFail($id);
+        $model = $model->update($attributes);
+
+        return $model;
+    }
+
+    public function all() {
+        return $MODEL_NAME$::includeRelationships()->latest()->paginate();
+    }
+
+    public function find($id) {
+        return $MODEL_NAME$::includeRelationships()->findOrFail($id);
+    }
+
+
+    public function delete($id) {
+        $model = $MODEL_NAME$::findOrFail($id);
+        return $model->delete();
+    }
+
+}
