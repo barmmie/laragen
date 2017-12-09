@@ -3,10 +3,10 @@
 namespace $NAMESPACE_MODEL$;
 
 use App\Traits\CanManageResource;
-use $NAMESPACE_MODEL_EXTEND$ as Model;
+use Illuminate\Database\Eloquent\Models as Eloquent;
 $SOFT_DELETE_IMPORT$
 $DOCS$
-class $MODEL_NAME$ extends Model
+class $MODEL_NAME$ extends Eloquent
 {
 $SOFT_DELETE$
     use CanManageResource;
